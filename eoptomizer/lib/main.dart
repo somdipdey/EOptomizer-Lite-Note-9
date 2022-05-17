@@ -19,7 +19,7 @@ class CustomFAB extends StatelessWidget {
     return FloatingActionButton.extended(
         onPressed: () {
           showSnackBar(context);
-          print('Optimizing batter and thermal behaviour');
+          print('Optimizing battery and thermal behaviour');
         },
         backgroundColor: Colors.deepPurple[900],
         icon: Icon(Icons.thumb_up),
@@ -30,6 +30,6 @@ class CustomFAB extends StatelessWidget {
 
 void showSnackBar(BuildContext context) {
   var snackBar =
-      SnackBar(content: Text('Optimizing batter and thermal behaviour'));
+      SnackBar(content: Text('Optimizing battery and thermal behaviour'));
   Scaffold.of(context).showSnackBar(snackBar);
 }
