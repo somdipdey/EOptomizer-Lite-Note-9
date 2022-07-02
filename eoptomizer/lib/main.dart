@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'EOptomizer',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
@@ -44,17 +45,23 @@ class _MyHomePageState extends State<MyHomePage> {
         setFrequencyLevelCPU0Min();
         setFrequencyLevelCPU4Min();
         setFrequencyLevelCPU6Min();
-
         optimizing = true;
         bodyText = 'Optimizing';
       } else {
+        debugPrint('Not optimizing battery and thermal behaviour');
+        setDefaultFrequencyLevelCPU0Max();
+        setDefaultFrequencyLevelCPU4Max();
+        setDefaultFrequencyLevelCPU6Max();
+        setDefaultFrequencyLevelCPU0Min();
+        setDefaultFrequencyLevelCPU4Min();
+        setDefaultFrequencyLevelCPU6Min();
         optimizing = false;
         bodyText = 'Not Optimizing';
-        debugPrint('Not optimizing battery and thermal behaviour');
       }
     });
   }
 
+  // Functions to optimize frequencies for 3 CPU clusters
   Future setFrequencyLevelCPU0Max() async {
     final String frequencyLevelCPU0Max =
         await frequencyChannel.invokeMethod('setFrequencyLevelCPU0Max');
@@ -86,16 +93,62 @@ class _MyHomePageState extends State<MyHomePage> {
   Future setFrequencyLevelCPU4Min() async {
     final String frequencyLevelCPU4Min =
         await frequencyChannel.invokeMethod('setFrequencyLevelCPU4Min');
-    print('Optimizing CPU4 Min Frequency');
+    debugPrint('Optimizing CPU4 Min Frequency');
     debugPrint(frequencyLevelCPU4Min);
   }
 
   Future setFrequencyLevelCPU6Min() async {
     final String frequencyLevelCPU6Min =
         await frequencyChannel.invokeMethod('setFrequencyLevelCPU6Min');
-    print('Optimizing CPU6 Min Frequency');
+    debugPrint('Optimizing CPU6 Min Frequency');
     debugPrint(frequencyLevelCPU6Min);
   }
+
+  //Functions to set frequencies for 3 CPU clusters to default
+
+  Future setDefaultFrequencyLevelCPU0Max() async {
+    final String frequencyLevelCPU0Max =
+        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU0Max');
+    debugPrint('Setting to default CPU0 Max Frequency');
+    debugPrint(frequencyLevelCPU0Max);
+  }
+
+  Future setDefaultFrequencyLevelCPU4Max() async {
+    final String frequencyLevelCPU4Max =
+        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU4Max');
+    debugPrint('Setting to default CPU4 Max Frequency');
+    debugPrint(frequencyLevelCPU4Max);
+  }
+
+  Future setDefaultFrequencyLevelCPU6Max() async {
+    final String frequencyLevelCPU6Max =
+        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU6Max');
+    debugPrint('Setting to default CPU6 Max Frequency');
+    debugPrint(frequencyLevelCPU6Max);
+  }
+
+  Future setDefaultFrequencyLevelCPU0Min() async {
+    final String frequencyLevelCPU0Min =
+        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU0Min');
+    debugPrint('Setting to default CPU0 Min Frequency');
+    debugPrint(frequencyLevelCPU0Min);
+  }
+
+  Future setDefaultFrequencyLevelCPU4Min() async {
+    final String frequencyLevelCPU4Min =
+        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU4Min');
+    debugPrint('Setting to default CPU4 Min Frequency');
+    debugPrint(frequencyLevelCPU4Min);
+  }
+
+  Future setDefaultFrequencyLevelCPU6Min() async {
+    final String frequencyLevelCPU6Min =
+        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU6Min');
+    debugPrint('Setting to default CPU6 Min Frequency');
+    debugPrint(frequencyLevelCPU6Min);
+  }
+
+  //////////////////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {

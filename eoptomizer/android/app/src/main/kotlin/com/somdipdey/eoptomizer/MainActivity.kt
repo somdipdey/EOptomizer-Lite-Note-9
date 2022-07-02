@@ -33,6 +33,15 @@ class MainActivity: FlutterActivity() {
                 result.success("Optimizing frequencies on CPU0, CPU4, CPU6")
             }
 
+            if (call.method == "setDefaultFrequencyLevelCPU0Max" || call.method == "setDefaultFrequencyLevelCPU4Max" || call.method == "setDefaultFrequencyLevelCPU6Max" || call.method == "setDefaultFrequencyLevelCPU0Min" || call.method == "setDefaultFrequencyLevelCPU4Min" || call.method == "setDefaultFrequencyLevelCPU6Min") {
+                setDefaultFrequencyLevelCPU0Max()
+                setDefaultFrequencyLevelCPU4Max()
+                setDefaultFrequencyLevelCPU6Max()
+                setDefaultFrequencyLevelCPU0Min()
+                setDefaultFrequencyLevelCPU4Min()
+                setDefaultFrequencyLevelCPU6Min()
+                result.success("Setting default frequencies on CPU0, CPU4, CPU6")
+            }
         }
     }
     fun setFrequencyLevelCPU0Max(): Unit {
@@ -59,5 +68,29 @@ class MainActivity: FlutterActivity() {
         val process: java.lang.Process = java.lang.Runtime.getRuntime().exec("su -c echo 500000 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq")
         process.waitFor()
     }
-
+    
+    fun setDefaultFrequencyLevelCPU0Max(): Unit {
+        val process: java.lang.Process = java.lang.Runtime.getRuntime().exec("su -c echo 1803000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq")
+        process.waitFor()
+    }
+    fun setDefaultFrequencyLevelCPU4Max(): Unit {
+        val process: java.lang.Process = java.lang.Runtime.getRuntime().exec("su -c echo 2253000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq")
+        process.waitFor()
+    }
+    fun setDefaultFrequencyLevelCPU6Max(): Unit {
+        val process: java.lang.Process = java.lang.Runtime.getRuntime().exec("su -c echo 2802000 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq")
+        process.waitFor()
+    }
+    fun setDefaultFrequencyLevelCPU0Min(): Unit {
+        val process: java.lang.Process = java.lang.Runtime.getRuntime().exec("su -c echo 300000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq")
+        process.waitFor()
+    }
+    fun setDefaultFrequencyLevelCPU4Min(): Unit {
+        val process: java.lang.Process = java.lang.Runtime.getRuntime().exec("su -c echo 400000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq")
+        process.waitFor()
+    }
+    fun setDefaultFrequencyLevelCPU6Min(): Unit {
+        val process: java.lang.Process = java.lang.Runtime.getRuntime().exec("su -c echo 500000 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq")
+        process.waitFor()
+    }
 }
