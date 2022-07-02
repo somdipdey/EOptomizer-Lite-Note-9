@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,52 +37,64 @@ class _MyHomePageState extends State<MyHomePage> {
   void _optimize() {
     setState(() {
       if (!optimizing) {
-        print('Optimizing battery and thermal behaviour');
+        debugPrint('Optimizing battery and thermal behaviour');
         setFrequencyLevelCPU0Max();
         setFrequencyLevelCPU4Max();
         setFrequencyLevelCPU6Max();
         setFrequencyLevelCPU0Min();
         setFrequencyLevelCPU4Min();
         setFrequencyLevelCPU6Min();
-        //showSnackBar(context);
+
         optimizing = true;
         bodyText = 'Optimizing';
       } else {
         optimizing = false;
         bodyText = 'Not Optimizing';
-        print('Not optimizing battery and thermal behaviour');
+        debugPrint('Not optimizing battery and thermal behaviour');
       }
     });
   }
 
   Future setFrequencyLevelCPU0Max() async {
-    await frequencyChannel.invokeMethod('setFrequencyLevelCPU0Max');
-    print('Optimizing CPU0 Max Frequency');
+    final String frequencyLevelCPU0Max =
+        await frequencyChannel.invokeMethod('setFrequencyLevelCPU0Max');
+    debugPrint('Optimizing CPU0 Max Frequency');
+    debugPrint(frequencyLevelCPU0Max);
   }
 
   Future setFrequencyLevelCPU4Max() async {
-    await frequencyChannel.invokeMethod('setFrequencyLevelCPU4Max');
-    print('Optimizing CPU4 Max Frequency');
+    final String frequencyLevelCPU4Max =
+        await frequencyChannel.invokeMethod('setFrequencyLevelCPU4Max');
+    debugPrint('Optimizing CPU4 Max Frequency');
+    debugPrint(frequencyLevelCPU4Max);
   }
 
   Future setFrequencyLevelCPU6Max() async {
-    await frequencyChannel.invokeMethod('setFrequencyLevelCPU6Max');
-    print('Optimizing CPU6 Max Frequency');
+    final String frequencyLevelCPU6Max =
+        await frequencyChannel.invokeMethod('setFrequencyLevelCPU6Max');
+    debugPrint('Optimizing CPU6 Max Frequency');
+    debugPrint(frequencyLevelCPU6Max);
   }
 
   Future setFrequencyLevelCPU0Min() async {
-    await frequencyChannel.invokeMethod('setFrequencyLevelCPU0Min');
-    print('Optimizing CPU0 Min Frequency');
+    final String frequencyLevelCPU0Min =
+        await frequencyChannel.invokeMethod('setFrequencyLevelCPU0Min');
+    debugPrint('Optimizing CPU0 Min Frequency');
+    debugPrint(frequencyLevelCPU0Min);
   }
 
   Future setFrequencyLevelCPU4Min() async {
-    await frequencyChannel.invokeMethod('setFrequencyLevelCPU4Min');
+    final String frequencyLevelCPU4Min =
+        await frequencyChannel.invokeMethod('setFrequencyLevelCPU4Min');
     print('Optimizing CPU4 Min Frequency');
+    debugPrint(frequencyLevelCPU4Min);
   }
 
   Future setFrequencyLevelCPU6Min() async {
-    await frequencyChannel.invokeMethod('setFrequencyLevelCPU6Min');
+    final String frequencyLevelCPU6Min =
+        await frequencyChannel.invokeMethod('setFrequencyLevelCPU6Min');
     print('Optimizing CPU6 Min Frequency');
+    debugPrint(frequencyLevelCPU6Min);
   }
 
   @override
@@ -112,10 +125,4 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
-}
-
-void showSnackBar(BuildContext context) {
-  var snackBar =
-      SnackBar(content: Text('Optimizing battery and thermal behaviour'));
-  Scaffold.of(context).showSnackBar(snackBar);
 }

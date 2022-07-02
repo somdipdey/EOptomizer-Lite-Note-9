@@ -30,6 +30,7 @@ class MainActivity: FlutterActivity() {
                 setFrequencyLevelCPU0Min()
                 setFrequencyLevelCPU4Min()
                 setFrequencyLevelCPU6Min()
+                result.success("Optimizing frequencies on CPU0, CPU4, CPU6")
             }
 
         }
