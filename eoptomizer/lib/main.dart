@@ -33,32 +33,40 @@ class _MyHomePageState extends State<MyHomePage> {
   static const frequencyChannel =
       MethodChannel('com.somdipdey.eoptomizer/frequency');
   bool optimizing = false;
-  String bodyText = 'Not Optimizing';
+  String bodyText = 'Default';
 
   void _optimize() {
     setState(() {
       if (!optimizing) {
-        debugPrint('Optimizing battery and thermal behaviour');
-        setFrequencyLevelCPU0Max();
-        setFrequencyLevelCPU4Max();
-        setFrequencyLevelCPU6Max();
-        setFrequencyLevelCPU0Min();
-        setFrequencyLevelCPU4Min();
-        setFrequencyLevelCPU6Min();
-        optimizing = true;
-        bodyText = 'Optimizing';
+        optimizationOn();
       } else {
-        debugPrint('Not optimizing battery and thermal behaviour');
-        setDefaultFrequencyLevelCPU0Max();
-        setDefaultFrequencyLevelCPU4Max();
-        setDefaultFrequencyLevelCPU6Max();
-        setDefaultFrequencyLevelCPU0Min();
-        setDefaultFrequencyLevelCPU4Min();
-        setDefaultFrequencyLevelCPU6Min();
-        optimizing = false;
-        bodyText = 'Not Optimizing';
+        defaultScheduler();
       }
     });
+  }
+
+  void optimizationOn() {
+    debugPrint('Optimizing battery and thermal behaviour');
+    setFrequencyLevelCPU0Max();
+    setFrequencyLevelCPU4Max();
+    setFrequencyLevelCPU6Max();
+    setFrequencyLevelCPU0Min();
+    setFrequencyLevelCPU4Min();
+    setFrequencyLevelCPU6Min();
+    optimizing = true;
+    bodyText = 'Optimization On';
+  }
+
+  void defaultScheduler() {
+    debugPrint('Not optimizing battery and thermal behaviour');
+    setDefaultFrequencyLevelCPU0Max();
+    setDefaultFrequencyLevelCPU4Max();
+    setDefaultFrequencyLevelCPU6Max();
+    setDefaultFrequencyLevelCPU0Min();
+    setDefaultFrequencyLevelCPU4Min();
+    setDefaultFrequencyLevelCPU6Min();
+    optimizing = false;
+    bodyText = 'Default';
   }
 
   // Functions to optimize frequencies for 3 CPU clusters
