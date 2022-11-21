@@ -1,4 +1,4 @@
-# eoptomizer
+# EOptomizer - Pixel3
 
 A new Flutter application.
 
