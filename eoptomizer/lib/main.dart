@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'EOptomizer',
+      title: 'EOptomizer - Pixel3',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'EOptomizer'),
+      home: new MyHomePage(title: 'EOptomizer - Pixel3'),
     );
   }
 }
@@ -49,10 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint('Optimizing battery and thermal behaviour');
     setFrequencyLevelCPU0Max();
     setFrequencyLevelCPU4Max();
-    setFrequencyLevelCPU6Max();
     setFrequencyLevelCPU0Min();
     setFrequencyLevelCPU4Min();
-    setFrequencyLevelCPU6Min();
     optimizing = true;
     bodyText = 'Optimization On';
   }
@@ -61,55 +59,59 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint('Not optimizing battery and thermal behaviour');
     setDefaultFrequencyLevelCPU0Max();
     setDefaultFrequencyLevelCPU4Max();
-    setDefaultFrequencyLevelCPU6Max();
     setDefaultFrequencyLevelCPU0Min();
     setDefaultFrequencyLevelCPU4Min();
-    setDefaultFrequencyLevelCPU6Min();
     optimizing = false;
     bodyText = 'Default';
   }
 
-  // Functions to optimize frequencies for 3 CPU clusters
+  // Functions to optimize frequencies for 2 CPU clusters
   Future setFrequencyLevelCPU0Max() async {
-    final String frequencyLevelCPU0Max =
-        await frequencyChannel.invokeMethod('setFrequencyLevelCPU0Max');
+    var sendMapMaxCPUFreq = <String, String>{
+      "LITTLECPUMaxFreq": _LITTLECPUFreq.text.toString().trim(),
+      "bigCPUMaxFreq": _bigCPUFreq.text.toString().trim()
+    };
+    debugPrint(_LITTLECPUFreq.text.toString().trim());
+    debugPrint(_bigCPUFreq.text.toString().trim());
+    final String frequencyLevelCPU0Max = await frequencyChannel.invokeMethod(
+        'setFrequencyLevelCPU0Max', sendMapMaxCPUFreq);
     debugPrint('Optimizing CPU0 Max Frequency');
     debugPrint(frequencyLevelCPU0Max);
   }
 
   Future setFrequencyLevelCPU4Max() async {
-    final String frequencyLevelCPU4Max =
-        await frequencyChannel.invokeMethod('setFrequencyLevelCPU4Max');
+    var sendMapMaxCPUFreq = <String, String>{
+      "LITTLECPUMaxFreq": _LITTLECPUFreq.text.toString().trim(),
+      "bigCPUMaxFreq": _bigCPUFreq.text.toString().trim()
+    };
+    debugPrint(_LITTLECPUFreq.text.toString().trim());
+    debugPrint(_bigCPUFreq.text.toString().trim());
+    final String frequencyLevelCPU4Max = await frequencyChannel.invokeMethod(
+        'setFrequencyLevelCPU4Max', sendMapMaxCPUFreq);
     debugPrint('Optimizing CPU4 Max Frequency');
     debugPrint(frequencyLevelCPU4Max);
   }
 
-  Future setFrequencyLevelCPU6Max() async {
-    final String frequencyLevelCPU6Max =
-        await frequencyChannel.invokeMethod('setFrequencyLevelCPU6Max');
-    debugPrint('Optimizing CPU6 Max Frequency');
-    debugPrint(frequencyLevelCPU6Max);
-  }
-
   Future setFrequencyLevelCPU0Min() async {
-    final String frequencyLevelCPU0Min =
-        await frequencyChannel.invokeMethod('setFrequencyLevelCPU0Min');
+    var sendMapMaxCPUFreq = <String, String>{
+      "LITTLECPUMaxFreq": _LITTLECPUFreq.text,
+      "bigCPUMaxFreq": _bigCPUFreq.text
+    };
+    final String frequencyLevelCPU0Min = await frequencyChannel.invokeMethod(
+        'setFrequencyLevelCPU0Min', sendMapMaxCPUFreq);
     debugPrint('Optimizing CPU0 Min Frequency');
     debugPrint(frequencyLevelCPU0Min);
   }
 
   Future setFrequencyLevelCPU4Min() async {
-    final String frequencyLevelCPU4Min =
-        await frequencyChannel.invokeMethod('setFrequencyLevelCPU4Min');
+    var sendMapMaxCPUFreq = <String, String>{
+      "LITTLECPUMaxFreq": _LITTLECPUFreq.text,
+      "bigCPUMaxFreq": _bigCPUFreq.text
+    };
+    final String frequencyLevelCPU4Min = await frequencyChannel.invokeMethod(
+        'setFrequencyLevelCPU4Min', sendMapMaxCPUFreq);
     debugPrint('Optimizing CPU4 Min Frequency');
     debugPrint(frequencyLevelCPU4Min);
-  }
-
-  Future setFrequencyLevelCPU6Min() async {
-    final String frequencyLevelCPU6Min =
-        await frequencyChannel.invokeMethod('setFrequencyLevelCPU6Min');
-    debugPrint('Optimizing CPU6 Min Frequency');
-    debugPrint(frequencyLevelCPU6Min);
   }
 
   //Functions to set frequencies for 3 CPU clusters to default
@@ -128,13 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint(frequencyLevelCPU4Max);
   }
 
-  Future setDefaultFrequencyLevelCPU6Max() async {
-    final String frequencyLevelCPU6Max =
-        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU6Max');
-    debugPrint('Setting to default CPU6 Max Frequency');
-    debugPrint(frequencyLevelCPU6Max);
-  }
-
   Future setDefaultFrequencyLevelCPU0Min() async {
     final String frequencyLevelCPU0Min =
         await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU0Min');
@@ -149,14 +144,10 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint(frequencyLevelCPU4Min);
   }
 
-  Future setDefaultFrequencyLevelCPU6Min() async {
-    final String frequencyLevelCPU6Min =
-        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelCPU6Min');
-    debugPrint('Setting to default CPU6 Min Frequency');
-    debugPrint(frequencyLevelCPU6Min);
-  }
-
   //////////////////////////////////////////////////
+
+  final _LITTLECPUFreq = TextEditingController()..text = "1766400";
+  final _bigCPUFreq = TextEditingController()..text = "2649600";
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +164,34 @@ class _MyHomePageState extends State<MyHomePage> {
             new Text(
               '$bodyText',
               style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+            new TextField(
+              controller: _LITTLECPUFreq,
+              decoration: InputDecoration(
+                hintText: "LITTLE CPU Freq",
+                labelText: "LITTLE CPU Max Freq",
+                labelStyle: TextStyle(color: Colors.white, fontSize: 18),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _LITTLECPUFreq.clear();
+                  },
+                  icon: const Icon(Icons.clear),
+                ),
+              ),
+            ),
+            new TextField(
+              controller: _bigCPUFreq,
+              decoration: InputDecoration(
+                hintText: "big CPU Freq",
+                labelText: "big CPU Max Freq",
+                labelStyle: TextStyle(color: Colors.white, fontSize: 18),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _bigCPUFreq.clear();
+                  },
+                  icon: const Icon(Icons.clear),
+                ),
+              ),
             ),
           ],
         ),
