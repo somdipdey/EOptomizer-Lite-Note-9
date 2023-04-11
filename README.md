@@ -35,3 +35,5 @@ chmod +x profiling.sh
 ## App UI/UX
 
 ![Graphical interface of ‘EOptomizer Lite - Note 9’ mobile app. (a) shows the app UI when CPUs & GPUs operate on default frequencies of the schedutil governor; (b) shows the app UI when the CPUs & GPUs operate at a chosen frequency for LITTLE & big CPUs and GPUs respectively](EOptomizer-Lite.png)
+
+Graphical interface of ‘EOptomizer Lite - Note 9’ mobile app. (a) shows the app UI when CPUs & GPUs operate on default frequencies of the schedutil governor; (b) shows the app UI when the CPUs & GPUs operate at a chosen frequency for LITTLE & big CPUs and GPUs respectively
