@@ -1,5 +1,5 @@
 # EOptomizer-Lite Note 9
-A Flutter based mobile app to perform DVFS easily on Samsung Galaxy Note 9.
+A Flutter based mobile app to perform DVFS easily on Samsung Galaxy Note 9 and record system performance metrics such as power consumption, FPS, temperature of big CPUs, LITTLE CPUs & GPUs.
 
 ## Installation
 
@@ -18,4 +18,16 @@ Make sure that you have the following version of Flutter/Dart installed on your 
 To check Flutter version after you have downloaded and installed Flutter/Dart use the following command:
 ```
 flutter --version
+```	
+
+### Record & Fetching System Performance Metrics
+
+To record the system performance metrics such as power consumption, FPS, temperature of big CPUs, LITTLE CPUs & GPUs of Note 9 make sure that the files from the /scripts folder are offloaded to the Note 9 device in the following directory: /data/local/tmp
+
+Also, need to provide executable permission to profiling.sh, get_fps.sh & utils.sh in the /data/local/tmp of Note 9. This can be done by accessing /data/local/tmp and then executing the following commands:
+
+```
+chmod +x utils.sh
+chmod +x get_fps.sh
+chmod +x profiling.sh
 ```	
