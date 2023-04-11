@@ -1,4 +1,4 @@
-# EOptomizer Lite Note 9
+# EOptomizer Lite - Note 9
 A Flutter based mobile app to perform DVFS easily on Samsung Galaxy Note 9 and record system performance metrics such as power consumption, FPS, temperature of big CPUs, LITTLE CPUs & GPUs.
 
 ## Installation
