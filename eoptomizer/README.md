@@ -1,6 +1,6 @@
-# EOptomizer - Pixel3
+# EOptomizer - Samsung Galaxy Note 9
 
-A new Flutter application to set LITTLE & big CPU max frequencies easily through textbox input.
+A new Flutter application to set LITTLE & big CPU max frequencies easily.
 
 ## Getting Started With Flutter
 
@@ -28,4 +28,4 @@ Make sure that you have the following version of Flutter/Dart installed on your 
 To check Flutter version after you have downloaded and installed Flutter/Dart use the following command:
 ```
 flutter --version
-```
+```	

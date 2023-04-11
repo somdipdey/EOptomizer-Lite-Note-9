@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'EOptomizer - Pixel3',
+      title: 'EOptomizer Lite - Note 9',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'EOptomizer - Pixel3'),
+      home: new MyHomePage(title: 'EOptomizer Lite - Note 9'),
     );
   }
 }
@@ -34,13 +34,19 @@ class _MyHomePageState extends State<MyHomePage> {
       MethodChannel('com.somdipdey.eoptomizer/frequency');
   bool optimizing = false;
   String bodyText = 'Default';
+  String FPSText = 'FPS: ';
+  String LITTLEFreqSelected = "";
+  String bigFreqSelected = "";
+  String GPUFreqSelected = "";
 
   void _optimize() {
     setState(() {
       if (!optimizing) {
         optimizationOn();
+        getFPS();
       } else {
         defaultScheduler();
+        getFPS();
       }
     });
   }
@@ -51,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setFrequencyLevelCPU4Max();
     setFrequencyLevelCPU0Min();
     setFrequencyLevelCPU4Min();
+    setFrequencyLevelGPU();
     optimizing = true;
     bodyText = 'Optimization On';
   }
@@ -61,18 +68,28 @@ class _MyHomePageState extends State<MyHomePage> {
     setDefaultFrequencyLevelCPU4Max();
     setDefaultFrequencyLevelCPU0Min();
     setDefaultFrequencyLevelCPU4Min();
+    setDefaultFrequencyLevelGPU();
     optimizing = false;
     bodyText = 'Default';
+  }
+
+  Future getFPS() async {
+    final String FPS = await frequencyChannel.invokeMethod('getFPS');
+    debugPrint('Getting FPS');
+    debugPrint(FPS);
+    FPSText = 'FPS: ' + FPS;
+    _FPS.text = FPSText;
   }
 
   // Functions to optimize frequencies for 2 CPU clusters
   Future setFrequencyLevelCPU0Max() async {
     var sendMapMaxCPUFreq = <String, String>{
-      "LITTLECPUMaxFreq": _LITTLECPUFreq.text.toString().trim(),
-      "bigCPUMaxFreq": _bigCPUFreq.text.toString().trim()
+      "LITTLECPUMaxFreq": LITTLEFreqSelected.toString().trim(),
+      "bigCPUMaxFreq": bigFreqSelected.toString().trim(),
+      "GPUFreq": GPUFreqSelected.toString().trim()
     };
-    debugPrint(_LITTLECPUFreq.text.toString().trim());
-    debugPrint(_bigCPUFreq.text.toString().trim());
+    debugPrint(LITTLEFreqSelected.toString().trim());
+    debugPrint(bigFreqSelected.toString().trim());
     final String frequencyLevelCPU0Max = await frequencyChannel.invokeMethod(
         'setFrequencyLevelCPU0Max', sendMapMaxCPUFreq);
     debugPrint('Optimizing CPU0 Max Frequency');
@@ -81,11 +98,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future setFrequencyLevelCPU4Max() async {
     var sendMapMaxCPUFreq = <String, String>{
-      "LITTLECPUMaxFreq": _LITTLECPUFreq.text.toString().trim(),
-      "bigCPUMaxFreq": _bigCPUFreq.text.toString().trim()
+      "LITTLECPUMaxFreq": LITTLEFreqSelected.toString().trim(),
+      "bigCPUMaxFreq": bigFreqSelected.toString().trim(),
+      "GPUFreq": GPUFreqSelected.toString().trim()
     };
-    debugPrint(_LITTLECPUFreq.text.toString().trim());
-    debugPrint(_bigCPUFreq.text.toString().trim());
+    debugPrint(LITTLEFreqSelected.toString().trim());
+    debugPrint(bigFreqSelected.toString().trim());
     final String frequencyLevelCPU4Max = await frequencyChannel.invokeMethod(
         'setFrequencyLevelCPU4Max', sendMapMaxCPUFreq);
     debugPrint('Optimizing CPU4 Max Frequency');
@@ -94,8 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future setFrequencyLevelCPU0Min() async {
     var sendMapMaxCPUFreq = <String, String>{
-      "LITTLECPUMaxFreq": _LITTLECPUFreq.text,
-      "bigCPUMaxFreq": _bigCPUFreq.text
+      "LITTLECPUMaxFreq": LITTLEFreqSelected.toString().trim(),
+      "bigCPUMaxFreq": bigFreqSelected.toString().trim(),
+      "GPUFreq": GPUFreqSelected.toString().trim()
     };
     final String frequencyLevelCPU0Min = await frequencyChannel.invokeMethod(
         'setFrequencyLevelCPU0Min', sendMapMaxCPUFreq);
@@ -105,13 +124,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future setFrequencyLevelCPU4Min() async {
     var sendMapMaxCPUFreq = <String, String>{
-      "LITTLECPUMaxFreq": _LITTLECPUFreq.text,
-      "bigCPUMaxFreq": _bigCPUFreq.text
+      "LITTLECPUMaxFreq": LITTLEFreqSelected.toString().trim(),
+      "bigCPUMaxFreq": bigFreqSelected.toString().trim(),
+      "GPUFreq": GPUFreqSelected.toString().trim()
     };
     final String frequencyLevelCPU4Min = await frequencyChannel.invokeMethod(
         'setFrequencyLevelCPU4Min', sendMapMaxCPUFreq);
     debugPrint('Optimizing CPU4 Min Frequency');
     debugPrint(frequencyLevelCPU4Min);
+  }
+
+  Future setFrequencyLevelGPU() async {
+    var sendMapMaxCPUFreq = <String, String>{
+      "LITTLECPUMaxFreq": LITTLEFreqSelected.toString().trim(),
+      "bigCPUMaxFreq": bigFreqSelected.toString().trim(),
+      "GPUFreq": GPUFreqSelected.toString().trim()
+    };
+    debugPrint(LITTLEFreqSelected.toString().trim());
+    debugPrint(bigFreqSelected.toString().trim());
+    debugPrint(GPUFreqSelected.toString().trim());
+    final String frequencyLevelGPU = await frequencyChannel.invokeMethod(
+        'setFrequencyLevelGPU', sendMapMaxCPUFreq);
+    debugPrint('Optimizing GPU Frequency');
+    debugPrint(frequencyLevelGPU);
   }
 
   //Functions to set frequencies for 3 CPU clusters to default
@@ -144,10 +179,19 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint(frequencyLevelCPU4Min);
   }
 
+  Future setDefaultFrequencyLevelGPU() async {
+    final String frequencyLevelGPU =
+        await frequencyChannel.invokeMethod('setDefaultFrequencyLevelGPU');
+    debugPrint('Setting to default GPU Frequency');
+    debugPrint(frequencyLevelGPU);
+  }
+
   //////////////////////////////////////////////////
 
-  final _LITTLECPUFreq = TextEditingController()..text = "1766400";
-  final _bigCPUFreq = TextEditingController()..text = "2649600";
+  //final _LITTLECPUFreq = TextEditingController()..text = "1794000";
+  //final _bigCPUFreq = TextEditingController()..text = "1794000";
+  //final _GPUFreq = TextEditingController()..text = "572000";
+  final TextEditingController _FPS = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -165,34 +209,92 @@ class _MyHomePageState extends State<MyHomePage> {
               '$bodyText',
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
-            new TextField(
-              controller: _LITTLECPUFreq,
-              decoration: InputDecoration(
-                hintText: "LITTLE CPU Freq",
-                labelText: "LITTLE CPU Max Freq",
-                labelStyle: TextStyle(color: Colors.white, fontSize: 18),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    _LITTLECPUFreq.clear();
-                  },
-                  icon: const Icon(Icons.clear),
-                ),
-              ),
+            SizedBox(
+              height: 20,
+            ),
+            new Text(
+              "Selected LITTLE Freq",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            new DropdownButtonFormField(
+                hint: Text("Select LITTLE Freq"),
+                items: LITTLEFreqs.map((e) => DropdownMenuItem(
+                      child: Text(e),
+                      value: e,
+                    )).toList(),
+                onChanged: (val) {
+                  LITTLEFreqSelected = val;
+                  debugPrint(LITTLEFreqSelected);
+                }),
+            //new TextField(
+            //controller: _LITTLECPUFreq,
+            //decoration: InputDecoration(
+            //hintText: "LITTLE CPU Freq",
+            //labelText: "LITTLE CPU Max Freq",
+            //labelStyle: TextStyle(color: Colors.white, fontSize: 18),
+            //suffixIcon: IconButton(
+            //onPressed: () {
+            //_LITTLECPUFreq.clear();
+            //},
+            //icon: const Icon(Icons.clear),
+            //),
+            //),
+            //),
+            SizedBox(
+              height: 15,
+            ),
+            new Text(
+              "Selected big Freq",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            new DropdownButtonFormField(
+                hint: Text("Select big Freq"),
+                items: bigFreqs
+                    .map((e) => DropdownMenuItem(
+                          child: Text(e),
+                          value: e,
+                        ))
+                    .toList(),
+                onChanged: (val) {
+                  bigFreqSelected = val;
+                  debugPrint(bigFreqSelected);
+                }),
+            SizedBox(
+              height: 15,
+            ),
+            new Text(
+              "Selected GPU Freq",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            new DropdownButtonFormField(
+                hint: Text("Select GPU Freq"),
+                items: GPUFreqs.map((e) => DropdownMenuItem(
+                      child: Text(e),
+                      value: e,
+                    )).toList(),
+                onChanged: (val) {
+                  GPUFreqSelected = val;
+                  debugPrint(GPUFreqSelected);
+                }),
+            /*
+            SizedBox(
+              height: 20,
             ),
             new TextField(
-              controller: _bigCPUFreq,
-              decoration: InputDecoration(
-                hintText: "big CPU Freq",
-                labelText: "big CPU Max Freq",
-                labelStyle: TextStyle(color: Colors.white, fontSize: 18),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    _bigCPUFreq.clear();
-                  },
-                  icon: const Icon(Icons.clear),
-                ),
-              ),
-            ),
+                controller: _FPS,
+                enabled: false,
+                decoration: InputDecoration(
+                  hintText: "FPS",
+                  labelText: "FPS",
+                  labelStyle: TextStyle(color: Colors.white, fontSize: 15),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _FPS.clear();
+                    },
+                    icon: const Icon(Icons.adb_sharp),
+                  ),
+                )),
+            */
           ],
         ),
       ),
@@ -206,3 +308,39 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+List<String> LITTLEFreqs = [
+  "1794000",
+  "1690000",
+  "1456000",
+  "1248000",
+  "1053000",
+  "949000",
+  "832000",
+  "715000",
+  "598000",
+  "455000"
+];
+
+List<String> bigFreqs = [
+  "1794000",
+  "1690000",
+  "1586000",
+  "1469000",
+  "1261000",
+  "1170000",
+  "1066000",
+  "962000",
+  "858000",
+  "741000",
+  "650000"
+];
+
+List<String> GPUFreqs = [
+  "572000",
+  "546000",
+  "455000",
+  "338000",
+  "299000",
+  "260000"
+];
