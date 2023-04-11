@@ -20,7 +20,7 @@ To check Flutter version after you have downloaded and installed Flutter/Dart us
 flutter --version
 ```	
 
-### Record & Fetching System Performance Metrics
+### Recording & Fetching System Performance Metrics
 
 To record the system performance metrics such as power consumption, FPS, temperature of big CPUs, LITTLE CPUs & GPUs of Note 9 make sure that the files from the /scripts folder are offloaded to the Note 9 device in the following directory: /data/local/tmp
 
